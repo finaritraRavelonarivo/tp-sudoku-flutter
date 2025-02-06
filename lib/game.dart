@@ -70,8 +70,23 @@ class _GameState extends State<Game> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
+             SizedBox(
+              width: boxSize * 3,
+              height: boxSize * 3,
+               child: GridView.count(
+                 crossAxisCount: 3,
+                 children: List.generate(9, (x) {
+                   return Container(
+                     width: boxSize,
+                     height: boxSize,
+                     decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent))
+                   );
+                 }),
+               ),
+
+            )
           ],
         ),
       ),
