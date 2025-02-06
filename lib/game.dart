@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Grid.dart';
+
 class Game extends StatefulWidget {
   const Game({Key? key, required this.title}) : super(key: key);
 
@@ -81,7 +83,8 @@ class _GameState extends State<Game> {
                    return Container(
                      width: boxSize,
                      height: boxSize,
-                     decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent))
+                     decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
+                     child: Grid()
                    );
                  }),
                ),
