@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sudoku_api/sudoku_api.dart';
 
-import 'Grid.dart';
+import 'oneGrid.dart';
 
 class Game extends StatefulWidget {
   const Game({Key? key, required this.title}) : super(key: key);
@@ -22,6 +23,20 @@ class Game extends StatefulWidget {
 
 class _GameState extends State<Game> {
   int _counter = 0;
+  late Puzzle sudoku;
+
+
+  @override
+  void initState() {
+    super.initState();
+    PuzzleOptions sudokuOptions = new PuzzleOptions();
+    sudoku = new Puzzle(sudokuOptions);
+    generateSudoku();
+  }
+  Future<void> generateSudoku() async{
+    await sudoku.generate();
+    setState(() {});
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -40,6 +55,12 @@ class _GameState extends State<Game> {
     var width = MediaQuery.of(context).size.width;
     var maxSize = height > width ? width : height;
     var boxSize = (maxSize / 3).ceil().toDouble();
+
+
+
+
+
+
 
     return Scaffold(
       appBar: AppBar(
@@ -84,7 +105,7 @@ class _GameState extends State<Game> {
                      width: boxSize,
                      height: boxSize,
                      decoration: BoxDecoration(border: Border.all(color: Colors.blueAccent)),
-                     child: Grid()
+                     child: OneGrid(gridValues: List.generate(9, (y) => sudoku.board()?.matrix()?[x][y].getValue() ?? 0))
                    );
                  }),
                ),

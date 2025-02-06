@@ -1,7 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Grid extends StatelessWidget{
+class OneGrid extends StatelessWidget{
+  const OneGrid({super.key, required this.gridValues});
+
+  final List<int> gridValues;
+
   @override
   Widget build(BuildContext context) {
 
@@ -16,6 +19,13 @@ class Grid extends StatelessWidget{
             width: boxSize,
             height: boxSize,
             decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+            child:
+                Center(
+                  child:  Text(
+                      gridValues[x] != 0 ? gridValues[x].toString() : ''
+                  )
+                )
+
 
           );
         }),
