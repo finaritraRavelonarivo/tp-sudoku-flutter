@@ -131,6 +131,7 @@ class _GameState extends State<Game> {
                                          changeColor(x,y);
                                         },
                                         selected : isSelected(x, y),
+                                      expectedValue: sudoku.solvedBoard()?.matrix()?[x][y].getValue() ?? 0
                                     ));
                               }),
                             ),
