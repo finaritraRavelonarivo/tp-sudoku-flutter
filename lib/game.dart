@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sudoku_api/sudoku_api.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import 'oneGrid.dart';
 
@@ -60,6 +61,32 @@ class _GameState extends State<Game> {
 
   bool isSelected(x,y) {
     return _xSelect == x && _ySelect == y;
+  }
+
+  void enterNumberAtCell(nb, interval) {
+    var pos = Position(column: _ySelect, row: _xSelect);
+    if (sudoku.solvedBoard()?.matrix()?[_xSelect][_ySelect].getValue() == nb+interval) {
+      sudoku.board()!.cellAt(pos).setValue(nb+interval);
+    }
+    else {
+      final snackBar = SnackBar(
+        /// need to set following properties for best effect of awesome_snackbar_content
+        elevation: 0,
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        content: AwesomeSnackbarContent(
+          title: 'Oups!',
+          message:
+          'Erreur, essayez un autre chiffre',
+          contentType: ContentType.failure,
+        ),
+      );
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(snackBar);
+    }
+
+    setState(() {});
   }
 
   @override
@@ -141,9 +168,7 @@ class _GameState extends State<Game> {
               children: List.generate(5, (x) {
                 return ElevatedButton(
                     onPressed: (){
-                      var pos = Position(column: _ySelect, row: _xSelect);
-                      sudoku.board()!.cellAt(pos).setValue(x+1);
-                      setState(() {});
+                      enterNumberAtCell(x, 1);
                     },
                     child: Text(
                         (x+1).toString()
@@ -154,9 +179,7 @@ class _GameState extends State<Game> {
                 children: List.generate(4, (x) {
                   return ElevatedButton(
                       onPressed: (){
-                        var pos = Position(column: _ySelect, row: _xSelect);
-                        sudoku.board()!.cellAt(pos).setValue(x+6);
-                        setState(() {});
+                        enterNumberAtCell(x, 6);
                       },
                       child: Text(
                           (x+6).toString()
