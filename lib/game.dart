@@ -135,7 +135,33 @@ class _GameState extends State<Game> {
                               }),
                             ),
                           ));
-                    })))
+                    }))),
+            Row(
+              children: List.generate(5, (x) {
+                return ElevatedButton(
+                    onPressed: (){
+                      var pos = Position(column: _ySelect, row: _xSelect);
+                      sudoku.board()!.cellAt(pos).setValue(x+1);
+                      setState(() {});
+                    },
+                    child: Text(
+                        (x+1).toString()
+                    ));
+              })
+            ),
+            Row(
+                children: List.generate(4, (x) {
+                  return ElevatedButton(
+                      onPressed: (){
+                        var pos = Position(column: _ySelect, row: _xSelect);
+                        sudoku.board()!.cellAt(pos).setValue(x+6);
+                        setState(() {});
+                      },
+                      child: Text(
+                          (x+6).toString()
+                      ));
+                })
+            )
           ],
         ),
       ),
